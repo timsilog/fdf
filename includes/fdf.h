@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 16:11:59 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/05 17:41:05 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/08 17:19:25 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct	s_pic
 	int			win_hei;
 	void		*mlx;
 	void		*win;
+	int			color1;
+	int			color2;
 }				t_pic;
 
 void	mult_vecmat(t_3d *src, float mat[4][4], t_3d *dest);
@@ -61,7 +63,7 @@ void	get_id_mat(float mat[4][4]);
 void	rotate_mat(float mat[4][4], float ax, float ay, float az);
 void	copy_mat(float src[4][4], float dest[4][4]);
 void	draw_line(t_pic *pic, t_2d p1, t_2d p2);
-void	parse(t_pic *pic, char *file);
+void	parse(t_pic *pic, char **argv, int colors);
 void	to_alignedview(t_pic *pic);
 void	to_worldview(t_pic *pic);
 void	get_2d_coord(t_pic *pic);

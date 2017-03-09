@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 17:13:45 by tjose             #+#    #+#             */
-/*   Updated: 2017/02/28 15:14:36 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/08 14:55:02 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	translate_mat(float mat[4][4], float x, float y, float z)
 	copy_mat(temp2, mat);
 }
 
-//do i still need this?
 void	copy_mat(float src[4][4], float dest[4][4])
 {
 	int i;

@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/05 17:10:52 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/05 17:36:34 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/08 17:30:11 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	parse1(t_pic *pic, int fd)
 
 	pic->width = 0;
 	pic->height = 0;
-	while(get_next_line(fd, &line))
+	while (get_next_line(fd, &line))
 	{
 		ft_printf("%s\n", line);
 		points = ft_strsplit(line, ' ');
@@ -77,14 +77,19 @@ static int	open_file(char *file)
 	return (fd);
 }
 
-void		parse(t_pic *pic, char *file)
+void		parse(t_pic *pic, char **argv, int colors)
 {
 	int	fd;
 
-	fd = open_file(file);
+	fd = open_file(argv[1]);
 	parse1(pic, fd);
 	close(fd);
-	fd = open_file(file);
+	fd = open_file(argv[1]);
 	parse2(pic, fd);
 	close(fd);
+	if (colors)
+	{
+		pic->color1 = ft_atoi(argv[2]);
+		pic->color2 = ft_atoi(argv[3]);
+	}
 }
