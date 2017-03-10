@@ -12,18 +12,26 @@
 
 #include "fdf.h"
 
-void	hex_to_rgb(t_pic *pic, char *s)
+void	hex_to_rgb(t_pic *pic, char *s1, char *s2)
 {
 	int		i;
 
-	i = ft_strlen(s) - 1;
+	i = ft_strlen(s1) - 1;
 	i = i > 1 ? i - 1 : i;
-	pic->c1.blue = s[i] ? ft_xtoi(&s[i]) : 0;
-	s[i--] = '\0';
+	pic->c1.blue = s1[i] ? ft_xtoi(&s1[i]) : 0;
+	s1[i--] = '\0';
 	i = i > 1 ? i - 1 : i;
-	pic->c1.green = s[i] ? ft_xtoi(&s[i--]) : 0;
-	s[i--] = '\0';
+	pic->c1.green = s1[i] ? ft_xtoi(&s1[i]) : 0;
+	s1[i--] = '\0';
 	i = i > 1 ? i - 1 : i;
-	pic->c1.red = s[i] ? ft_xtoi(&s[i]) : 0;
-	ft_printf("%d, %d, %d\n", pic->c1.red, pic->c1.green, pic->c1.blue);
+	pic->c1.red = s1[i] ? ft_xtoi(&s1[i]) : 0;
+	i = ft_strlen(s2) - 1;
+	i = i > 1 ? i - 1 : i;
+	pic->c2.blue = s2[i] ? ft_xtoi(&s2[i]) : 0;
+	s2[i--] = '\0';
+	i = i > 1 ? i - 1 : i;
+	pic->c2.green = s2[i] ? ft_xtoi(&s2[i]) : 0;
+	s2[i--] = '\0';
+	i = i > 1 ? i - 1 : i;
+	pic->c2.red = s2[i] ? ft_xtoi(&s2[i]) : 0;
 }

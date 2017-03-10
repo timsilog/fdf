@@ -51,6 +51,8 @@ t_pic		*init_pic(void)
 	pic->win = mlx_new_window(pic->mlx, WIN_WID, WIN_HEI, "FDF");
 	pic->z_min = 0;
 	pic->z_max = 0;
+	pic->color1 = 0x00ffffff;
+	pic->color2 = 0x00ffffff;
 	return (pic);
 }
 

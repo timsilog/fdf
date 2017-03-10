@@ -12,6 +12,11 @@
 
 #include "fdf.h"
 
+static void	place_color(t_pic *pic, float x, float y)
+{
+	mlx_pixel_put(pic->mlx, pic->win, x, y, pic->color1);
+}
+
 static void	driving_axis_x(t_pic *pic, t_2d p1, t_2d p2, float slope)
 {
 	float	i;
@@ -27,7 +32,7 @@ static void	driving_axis_x(t_pic *pic, t_2d p1, t_2d p2, float slope)
 	e = slope - 1.0;
 	while (i <= p2.x)
 	{
-		mlx_pixel_put(pic->mlx, pic->win, i, j, 16777215);
+		place_color(pic, i, j);
 		if (e >= 0.0)
 		{
 			j = neg_y ? j - 1.0 : j + 1.0;
@@ -60,7 +65,7 @@ static void	driving_axis_y(t_pic *pic, t_2d p1, t_2d p2, float slope)
 			i = neg_x ? i - 1.0 : i + 1.0;
 			e -= 1.0;
 		}
-		mlx_pixel_put(pic->mlx, pic->win, i, j, 0x0000ff00);
+		place_color(pic, i, j);
 		j += 1.0;
 		e += slope;
 	}

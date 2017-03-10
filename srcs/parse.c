@@ -94,6 +94,6 @@ void		parse(t_pic *pic, char **argv, int colors)
 	{
 		pic->color1 = ft_xtoi(argv[2]);
 		pic->color2 = ft_xtoi(argv[3]);
-		hex_to_rgb(
+		hex_to_rgb(pic, argv[2], argv[3]);
 	}
 }

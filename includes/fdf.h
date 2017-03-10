@@ -78,7 +78,7 @@ void			to_alignedview(t_pic *pic);
 void			to_worldview(t_pic *pic);
 void			get_2d_coord(t_pic *pic);
 void			draw_pic(t_pic *pic);
-void			hex_to_rgb(t_pic *pic, char *s);
+void			hex_to_rgb(t_pic *pic, char *s1, char *s2);
 t_3d			get_3d(float x, float y, float z);
 
 #endif
