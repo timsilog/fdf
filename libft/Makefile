@@ -6,7 +6,7 @@
 #    By: tjose <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/06 15:03:02 by tjose             #+#    #+#              #
-#    Updated: 2017/02/21 15:18:29 by tjose            ###   ########.fr        #
+#    Updated: 2017/03/09 14:06:39 by tjose            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,8 @@ LIBFTFILES = ft_putchar.c \
 			 ft_wcstombs.c \
 			 ft_wclen.c \
 			 ft_wcslen.c \
-			 get_next_line.c
+			 get_next_line.c \
+			 ft_xtoi.c
 
 PRINTF_OBJS = $(addprefix $(OBJDIR), $(PRINTFFILES:.c=.o))
 LIBFT_OBJS = $(addprefix $(LIBODIR), $(LIBFTFILES:.c=.o))

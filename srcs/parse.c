@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/05 17:10:52 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/08 17:30:11 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/09 17:47:47 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,21 @@ static void	parse2(t_pic *pic, int fd)
 	char	**points;
 	int		i;
 
-	i = 0;
+	i = -1;
 	y = 0;
 	if (!(pic->points = (t_3d*)malloc(sizeof(t_3d) * pic->width * pic->height)))
 		exit(-1);
 	while (get_next_line(fd, &line))
 	{
 		points = ft_strsplit(line, ' ');
-		x = 0;
-		while (x < pic->width)
+		x = -1;
+		while (++x < pic->width)
 		{
-			pic->points[i++] = get_3d(x, y, ft_atoi(points[x]));
-			x++;
+			pic->points[++i] = get_3d(x, y, ft_atoi(points[x]));
+			if (pic->points[i].z < pic->z_min)
+				pic->z_min = pic->points[i].z;
+			if (pic->points[i].z > pic->z_max)
+				pic->z_max = pic->points[i].z;
 		}
 		y++;
 	}
@@ -89,7 +92,8 @@ void		parse(t_pic *pic, char **argv, int colors)
 	close(fd);
 	if (colors)
 	{
-		pic->color1 = ft_atoi(argv[2]);
-		pic->color2 = ft_atoi(argv[3]);
+		pic->color1 = ft_xtoi(argv[2]);
+		pic->color2 = ft_xtoi(argv[3]);
+		hex_to_rgb(
 	}
 }

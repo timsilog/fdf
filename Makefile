@@ -6,7 +6,7 @@
 #    By: tjose <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/21 14:51:55 by tjose             #+#    #+#              #
-#    Updated: 2017/03/05 17:41:22 by tjose            ###   ########.fr        #
+#    Updated: 2017/03/09 17:41:49 by tjose            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCFILES = main.c \
 		   rotate.c \
 		   draw.c \
 		   parse.c \
-		   draw_pic.c
+		   draw_pic.c \
+		   colors.c
 SRCDIR = ./srcs/
 OBJDIR = ./objs/
 INCDIR = ./includes/

@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/20 16:42:42 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/08 18:33:53 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/09 15:59:43 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_pic		*init_pic(void)
 		exit(-1);
 	pic->mlx = mlx_init();
 	pic->win = mlx_new_window(pic->mlx, WIN_WID, WIN_HEI, "FDF");
+	pic->z_min = 0;
+	pic->z_max = 0;
 	return (pic);
 }
 
@@ -72,7 +74,7 @@ int			main(int argc, char **argv)
 	{
 		printf("\n%d: x = %f, y = %f, z = %f", i, pic->screen[i].x, pic->screen[i].y, pic->points[i].z);
 	}*/
-	ft_printf("%x, %x", pic->color1, pic->color2);
+	ft_printf("%d %d",pic->color1, pic->color2);
 	draw_pic(pic);
 	free(pic);
 	return (0);

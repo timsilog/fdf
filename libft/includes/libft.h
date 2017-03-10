@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:06:56 by tjose             #+#    #+#             */
-/*   Updated: 2017/02/22 14:47:33 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/09 14:07:31 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int					ft_numlen(intmax_t n);
 int					ft_wctomb(char *s, wchar_t wchar);
 int					ft_wclen(const wchar_t c);
 int					ft_wcslen(const wchar_t *s);
+int					ft_xtoi(char *s);
 size_t				ft_strlen(const char *str);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_wcstombs(char *s, const wchar_t *pwcs, size_t n);

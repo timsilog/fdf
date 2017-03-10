@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_xtoi.c                                          :+:      :+:    :+:   */
+/*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 17:30:37 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/09 14:58:55 by tjose            ###   ########.fr       */
+/*   Created: 2017/03/09 17:14:13 by tjose             #+#    #+#             */
+/*   Updated: 2017/03/09 17:41:29 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fdf.h"
 
-int		ft_xtoi(char *s)
+void	hex_to_rgb(t_pic *pic, char *s)
 {
-	int	i;
-	int	ans;
-	int	multiplier;
+	int		i;
 
 	i = ft_strlen(s) - 1;
-	ans = 0;
-	multiplier = 1;
-	while (i >= 0)
-	{
-		if (s[i] >= 'A' && s[i] <= 'F')
-			ans += multiplier * (s[i] - ('A' - 10));
-		else if (s[i] >= 'a' && s[i] <= 'f')
-			ans += multiplier * (s[i] - ('a' - 10));
-		else if (s[i] >= '0' && s[i] <= '9')
-			ans += multiplier * (s[i] - '0');
-		multiplier *= 16;
-		i--;
-	}
-	return (ans);
+	i = i > 1 ? i - 1 : i;
+	pic->c1.blue = s[i] ? ft_xtoi(&s[i]) : 0;
+	s[i--] = '\0';
+	i = i > 1 ? i - 1 : i;
+	pic->c1.green = s[i] ? ft_xtoi(&s[i--]) : 0;
+	s[i--] = '\0';
+	i = i > 1 ? i - 1 : i;
+	pic->c1.red = s[i] ? ft_xtoi(&s[i]) : 0;
+	ft_printf("%d, %d, %d\n", pic->c1.red, pic->c1.green, pic->c1.blue);
 }
