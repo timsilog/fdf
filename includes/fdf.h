@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 16:11:59 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/09 17:48:10 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/10 18:59:42 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ void			translate_mat(float mat[4][4], float x, float y, float z);
 void			get_id_mat(float mat[4][4]);
 void			rotate_mat(float mat[4][4], float ax, float ay, float az);
 void			copy_mat(float src[4][4], float dest[4][4]);
-void			draw_line(t_pic *pic, t_2d p1, t_2d p2);
+void			draw_line(t_pic *pic, int i1, int i2);
 void			parse(t_pic *pic, char **argv, int colors);
 void			to_alignedview(t_pic *pic);
 void			to_worldview(t_pic *pic);
 void			get_2d_coord(t_pic *pic);
 void			draw_pic(t_pic *pic);
 void			hex_to_rgb(t_pic *pic, char *s1, char *s2);
+int				get_color(t_pic *pic, float z);
 t_3d			get_3d(float x, float y, float z);
 
 #endif
