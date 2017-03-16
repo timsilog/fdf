@@ -22,7 +22,7 @@ static void	parse2(t_pic *pic, int fd)
 
 	i = -1;
 	y = 0;
-	if (!(pic->points = (t_3d*)malloc(sizeof(t_3d) * pic->width * pic->height)))
+	if (!(pic->points = (t_3d*)malloc(sizeof(t_3d) * pic->size)))
 		exit(-1);
 	while (get_next_line(fd, &line))
 	{
@@ -51,7 +51,7 @@ static void	parse1(t_pic *pic, int fd)
 	pic->height = 0;
 	while (get_next_line(fd, &line))
 	{
-		ft_printf("%s\n", line);
+		//ft_printf("%s\n", line);
 		points = ft_strsplit(line, ' ');
 		width = 0;
 		while (points[width])

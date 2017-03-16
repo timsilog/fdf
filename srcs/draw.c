@@ -12,13 +12,18 @@
 
 #include "fdf.h"
 
-static void	place_color(t_pic *pic, float x, float y, float z_current)
+static float	z_bot(float z_min, float z1, float z2)
 {
-	mlx_pixel_put(pic->mlx, pic->win, x, y, get_color(pic, z_current / (pic->z_max - pic->z_min)));
-	//ft_printf("%d\n", get_color(pic, z_current / (pic->z_max - pic->z_min)));
+	return ((z1 < z2 ? z1 : z2) - z_min);
 }
 
-static void	driving_axis_x(t_pic *pic, t_2d p1, t_2d p2, float z)
+static void	place_color(t_pic *pic, float x, float y, float z_current)
+{
+	mlx_pixel_put(pic->mlx, pic->win, x, y,
+		get_color(pic, z_current / (pic->z_max - pic->z_min)));
+}
+
+static void	driving_axis_x(t_pic *pic, t_3d p1, t_3d p2, float z[2])
 {
 	float	i;
 	float	j;
@@ -27,15 +32,14 @@ static void	driving_axis_x(t_pic *pic, t_2d p1, t_2d p2, float z)
 	float	slope;
 
 	slope = fabs((p2.y - p1.y) / (p2.x - p1.x));
-	if (p2.x < p1.x)
-		driving_axis_x(pic, p2, p1, slope);
 	neg_y = p2.y < p1.y ? 1 : 0;
 	i = p1.x;
 	j = p1.y;
 	e = slope - 1.0;
 	while (i <= p2.x)
 	{
-		place_color(pic, i, j, (i - p1.x) / fabs(p2.x - p1.x) * z);
+		place_color(pic, i, j, z[0] ? (1.0 - (i - p1.x) / fabs(p2.x - p1.x)) * 
+			z[0] + z_bot(pic->z_min, z[1], z[2]) : z[1]);
 		if (e >= 0.0)
 		{
 			j = neg_y ? j - 1.0 : j + 1.0;
@@ -46,7 +50,7 @@ static void	driving_axis_x(t_pic *pic, t_2d p1, t_2d p2, float z)
 	}
 }
 
-static void	driving_axis_y(t_pic *pic, t_2d p1, t_2d p2, float z)
+static void	driving_axis_y(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 {
 	float	i;
 	float	j;
@@ -68,7 +72,8 @@ static void	driving_axis_y(t_pic *pic, t_2d p1, t_2d p2, float z)
 			i = neg_x ? i - 1.0 : i + 1.0;
 			e -= 1.0;
 		}
-		place_color(pic, i, j, (j - p1.y) / fabs(p2.y - p1.y) * z);
+		place_color(pic, i, j, z[0] ? (1.0 - (j - p1.y) / fabs(p2.y - p1.y)) *
+			z[0] + z_bot(pic->z_min, z[1], z[2]) : z[1]);
 		j += 1.0;
 		e += slope;
 	}
@@ -76,29 +81,28 @@ static void	driving_axis_y(t_pic *pic, t_2d p1, t_2d p2, float z)
 
 void		draw_line(t_pic *pic, int i1, int i2)
 {
-	t_2d	p1;
-	t_2d	p2;
 	float	dx;
 	float	dy;
-	float	z_diff;
+	float	z_type[3];
 
-	p1 = pic->screen[i1];
-	p2 = pic->screen[i2];
-	dx = p2.x - p1.x;
-	dy = p2.y - p1.y;
-	z_diff = fabs(pic->points[i2].z - pic->points[i1].z);
+	dx = pic->screen[i2].x - pic->screen[i1].x;
+	dy = pic->screen[i2].y - pic->screen[i1].y;
+	z_type[0] = fabs(pic->points[i2].z - pic->points[i1].z);
+	z_type[1] = pic->points[i1].z;
+	z_type[2] = pic->points[i2].z;
+	//printf("p1: %f, p2: %f\n", pic->points[i1].z, pic->points[i2].z);
 	if (fabs(dx) >= fabs(dy))
 	{
-		if (p2.x >= p1.x)
-			driving_axis_x(pic, p1, p2, z_diff ? z_diff : pic->points[i1].z);
+		if (pic->screen[i2].x >= pic->screen[i1].x)
+			driving_axis_x(pic, pic->screen[i1], pic->screen[i2], z_type);
 		else
-			driving_axis_x(pic, p2, p1, z_diff ? z_diff : pic->points[i1].z);
+			driving_axis_x(pic, pic->screen[i2], pic->screen[i1], z_type);
 	}
 	else
 	{
-		if (p2.y >= p1.y)
-			driving_axis_y(pic, p1, p2, z_diff ? z_diff : pic->points[i1].z);
+		if (pic->screen[i2].y >= pic->screen[i1].y)
+			driving_axis_y(pic, pic->screen[i1], pic->screen[i2], z_type);
 		else
-			driving_axis_y(pic, p2, p1, z_diff ? z_diff : pic->points[i1].z);
+			driving_axis_y(pic, pic->screen[i2], pic->screen[i1], z_type);
 	}
 }

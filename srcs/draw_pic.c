@@ -39,15 +39,11 @@ void		get_2d_coord(t_pic *pic)
 {
 	int i;
 
-	if (!(pic->screen = malloc(sizeof(t_2d) * pic->size)))
-		exit(-1);
 	i = -1;
 	while (++i < pic->size)
 	{
-		//if (!pic->points[i].z)
-		//	pic->points[i].z = 1;
-		pic->screen[i].x = 11 * pic->points[i].x + WIN_WID / 2;
-		pic->screen[i].y = 11 * pic->points[i].y + WIN_HEI / 2;
+		pic->screen[i].x = 11 * pic->screen[i].x + WIN_WID / 2;
+		pic->screen[i].y = 11 * pic->screen[i].y + WIN_HEI / 2;
 	}
 }
 
@@ -59,9 +55,11 @@ void		to_worldview(t_pic *pic)
 	get_id_mat(world);
 	translate_mat(world, -(pic->width / 2), -(pic->height / 2), 0);
 	//scale?
+	if (!(pic->screen = malloc(sizeof(t_3d) * pic->size)))
+		exit(-1);
 	i = -1;
 	while (++i < pic->size)
-		mult_vecmat(&pic->points[i], world, &pic->points[i]);
+		mult_vecmat(&pic->points[i], world, &pic->screen[i]);
 }
 
 void		to_alignedview(t_pic *pic)
@@ -76,5 +74,5 @@ void		to_alignedview(t_pic *pic)
 	//translate_mat(aligned, 0, 0, 0);??
 	i = -1;
 	while (++i < pic->size)
-		mult_vecmat(&pic->points[i], aligned, &pic->points[i]);
+		mult_vecmat(&pic->screen[i], aligned, &pic->screen[i]);
 }

@@ -35,7 +35,7 @@ typedef struct	s_3d
 }				t_3d;
 typedef struct	s_vertex
 {
-	t_2d		screen;
+	t_3d		screen;
 	t_3d		local;
 	t_3d		world;
 	t_3d		aligned;
@@ -50,7 +50,7 @@ typedef struct	s_pic
 {
 	t_vertex	**verts;
 	t_3d		*points;
-	t_2d		*screen;
+	t_3d		*screen;
 	int			width;
 	int			height;
 	int			size;

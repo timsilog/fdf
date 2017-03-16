@@ -36,7 +36,7 @@ t_vertex	*get_vert(float x, float y, float z)
 	t_vertex *temp;
 
 	temp = (t_vertex*)malloc(sizeof(t_vertex));
-	temp->screen = get_2d(0, 0);
+	temp->screen = get_3d(x, y, z);
 	temp->world = get_3d(x, y, z);
 	return (temp);
 }
@@ -53,13 +53,18 @@ t_pic		*init_pic(void)
 	pic->z_max = 0;
 	pic->color1 = 0x00ffffff;
 	pic->color2 = 0x00ffffff;
+	pic->c1.red = 0xff;
+	pic->c1.green = 0xff;
+	pic->c1.blue = 0xff;
+	pic->c2.red = 0xff;
+	pic->c2.green = 0xff;
+	pic->c2.blue = 0xff;
 	return (pic);
 }
 
 int			main(int argc, char **argv)
 {
 	t_pic	*pic;
-	int		i;//////
 
 	if (argc < 2 || argc > 4 )
 	{
@@ -71,12 +76,10 @@ int			main(int argc, char **argv)
 	to_worldview(pic);
 	to_alignedview(pic);
 	get_2d_coord(pic);
-	i = -1;///////
-	/*while (++i < pic->size)
-	{
-		printf("\n%d: x = %f, y = %f, z = %f", i, pic->screen[i].x, pic->screen[i].y, pic->points[i].z);
-	}*/
-	ft_printf("%d %d",pic->color1, pic->color2);
+	printf("%x, %x\n", pic->color1, pic->color2);
+	printf("%x, %x, %x\n",pic->c1.red, pic->c1.green, pic->c1.blue);
+	printf("%x, %x, %x\n",pic->c2.red, pic->c2.green, pic->c2.blue);
+
 	draw_pic(pic);
 	free(pic);
 	return (0);
