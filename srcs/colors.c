@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 17:14:13 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/10 18:59:40 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/16 23:24:49 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,32 @@ void	hex_to_rgb(t_pic *pic, char *s1, char *s2)
 **	z is a percentage of how high or low the current pixel is on our z spectrum
 */
 
-int		get_color(t_pic *pic, float z)
+int		get_color(t_pic *pic, float z, int flag)
 {
-	int	r;
-	int	g;
-	int	b;
+	int		r;
+	int		g;
+	int		b;
 
-	/*r = round(abs(pic->c2.red - pic->c1.red) * z);
+	r = round(abs(pic->c2.red - pic->c1.red) * z);
+	if (flag)
+		r = pic->c1.red < pic->c2.red ? r + pic->c1.red :
+			pic->c1.red - r;
+	else
+		r = pic->c2.red < pic->c1.red ? r + pic->c2.red :
+			pic->c2.red - r;
 	g = round(abs(pic->c2.green - pic->c1.green) * z);
-	b = round(abs(pic->c2.blue - pic->c1.blue) * z);*/
-	r = round(abs(pic->c2.red - pic->c1.red) * z) +
-		(pic->c1.red < pic->c2.red ? pic->c1.red : pic->c2.red);
-	g = round(abs(pic->c2.green - pic->c1.green) * z) +
-		(pic->c1.green < pic->c2.green ? pic->c1.green : pic->c2.green);
-	b = round(abs(pic->c2.blue - pic->c1.blue) * z) +
-		(pic->c1.blue < pic->c2.blue ? pic->c1.blue : pic->c2.blue);
-	//printf("%x, %x, %x, z = %f\n", r , g , b, z);
+	if (flag)
+		g = pic->c1.green < pic->c2.green ? g + pic->c1.green :
+			pic->c1.green - g;
+	else
+		g = pic->c2.green < pic->c1.green ? g + pic->c2.green :
+			pic->c2.green - g;
+	b = round(abs(pic->c2.blue - pic->c1.blue) * z);
+	if (flag)
+		b = pic->c1.blue < pic->c2.blue ? b + pic->c1.blue :
+			pic->c1.blue - b;
+	else
+		b = pic->c2.blue < pic->c1.blue ? b + pic->c2.blue :
+			pic->c2.blue - b;
 	return ((r * 0x10000) + (g * 0x100) + b);
-//	return ((r * 0x10000) + (g * 0x100) + b + pic->color1);
 }

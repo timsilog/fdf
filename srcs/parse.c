@@ -6,11 +6,21 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/05 17:10:52 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/09 17:47:47 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/16 19:54:49 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+t_3d		get_3d(float x, float y, float z)
+{
+	t_3d	temp;
+
+	temp.x = x;
+	temp.y = y;
+	temp.z = z;
+	return (temp);
+}
 
 static void	parse2(t_pic *pic, int fd)
 {
@@ -51,7 +61,6 @@ static void	parse1(t_pic *pic, int fd)
 	pic->height = 0;
 	while (get_next_line(fd, &line))
 	{
-		//ft_printf("%s\n", line);
 		points = ft_strsplit(line, ' ');
 		width = 0;
 		while (points[width])
@@ -82,7 +91,9 @@ static int	open_file(char *file)
 
 void		parse(t_pic *pic, char **argv, int colors)
 {
-	int	fd;
+	int		fd;
+	int		i;
+	float	temp;
 
 	fd = open_file(argv[1]);
 	parse1(pic, fd);
@@ -90,6 +101,15 @@ void		parse(t_pic *pic, char **argv, int colors)
 	fd = open_file(argv[1]);
 	parse2(pic, fd);
 	close(fd);
+	if (pic->z_min < 0)
+	{
+		temp = -pic->z_min;
+		i = -1;
+		while (++i < pic->size)
+			pic->points[i].z += temp;
+		pic->z_min += temp;
+		pic->z_max += temp;
+	}
 	if (colors)
 	{
 		pic->color1 = ft_xtoi(argv[2]);

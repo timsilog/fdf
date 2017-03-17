@@ -6,75 +6,76 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 18:35:31 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/10 18:59:41 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/17 01:34:40 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static float	z_bot(float z_min, float z1, float z2)
+static float	z_bot(t_pic *pic, float z1, float z2)
 {
-	return ((z1 < z2 ? z1 : z2) - z_min);
+	if (z1 < z2)
+		return (pic->z_max - z2);
+	else
+		return (pic->z_min + z2);
 }
 
-static void	place_color(t_pic *pic, float x, float y, float z_current)
+static void	place_color(t_pic *pic, float xy[2], float z_current, int flag)
 {
-	mlx_pixel_put(pic->mlx, pic->win, x, y,
-		get_color(pic, z_current / (pic->z_max - pic->z_min)));
+	mlx_pixel_put(pic->mlx, pic->win, xy[0], xy[1],
+		get_color(pic, z_current / (pic->z_max - pic->z_min), flag));
 }
 
-static void	driving_axis_x(t_pic *pic, t_3d p1, t_3d p2, float z[2])
+static void	driving_axis_x(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 {
-	float	i;
-	float	j;
+	float	ij[2];
 	int		neg_y;
 	float	e;
 	float	slope;
 
 	slope = fabs((p2.y - p1.y) / (p2.x - p1.x));
 	neg_y = p2.y < p1.y ? 1 : 0;
-	i = p1.x;
-	j = p1.y;
+	ij[0] = p1.x;
+	ij[1] = p1.y;
 	e = slope - 1.0;
-	while (i <= p2.x)
+	while (ij[0] <= p2.x)
 	{
-		place_color(pic, i, j, z[0] ? (1.0 - (i - p1.x) / fabs(p2.x - p1.x)) * 
-			z[0] + z_bot(pic->z_min, z[1], z[2]) : z[1]);
+		place_color(pic, ij, z[0] ? ((ij[0] - p1.x) / fabs(p2.x - p1.x)) *
+				z[0] + z_bot(pic, z[1], z[2]) : z[1], z[1] < z[2] ? 1 : 0);
 		if (e >= 0.0)
 		{
-			j = neg_y ? j - 1.0 : j + 1.0;
+			ij[1] = neg_y ? ij[1] - 1.0 : ij[1] + 1.0;
 			e -= 1.0;
 		}
-		i += 1.0;
+		ij[0] += 1.0;
 		e += slope;
 	}
 }
 
 static void	driving_axis_y(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 {
-	float	i;
-	float	j;
+	float	ij[2];
 	float	e;
 	float	slope;
 	int		neg_x;
 
 	slope = fabs((p2.x - p1.x) / (p2.y - p1.y));
-	i = p1.x;
-	j = p1.y;
+	ij[0] = p1.x;
+	ij[1] = p1.y;
 	neg_x = p2.x < p1.x ? 1 : 0;
-	e = (p2.x - p1.x) > 0.0 ? -(1.0 - (p1.x - i) - (p1.y - j) * ((p2.x - p1.x) /
-				(p2.y - p1.y))) : -((p1.x - i) - (p1.y - j) * ((p2.x - p1.x) /
-				(p2.y - p1.y)));
-	while (j <= p2.y)
+	e = (p2.x - p1.x) > 0.0 ? -(1.0 - (p1.x - ij[0]) - (p1.y - ij[1]) *
+			((p2.x - p1.x) / (p2.y - p1.y))) : -((p1.x - ij[0]) -
+			(p1.y - ij[1]) * ((p2.x - p1.x) / (p2.y - p1.y)));
+	while (ij[1] <= p2.y)
 	{
 		while (e >= 0.0)
 		{
-			i = neg_x ? i - 1.0 : i + 1.0;
+			ij[0] = neg_x ? ij[0] - 1.0 : ij[0] + 1.0;
 			e -= 1.0;
 		}
-		place_color(pic, i, j, z[0] ? (1.0 - (j - p1.y) / fabs(p2.y - p1.y)) *
-			z[0] + z_bot(pic->z_min, z[1], z[2]) : z[1]);
-		j += 1.0;
+		place_color(pic, ij, z[0] ? (1.0 - (ij[1] - p1.y) / fabs(p2.y - p1.y)) *
+				z[0] + z_bot(pic, z[1], z[2]) : z[1], z[1] < z[2] ? 1 : 0);
+		ij[1] += 1.0;
 		e += slope;
 	}
 }
@@ -90,19 +91,18 @@ void		draw_line(t_pic *pic, int i1, int i2)
 	z_type[0] = fabs(pic->points[i2].z - pic->points[i1].z);
 	z_type[1] = pic->points[i1].z;
 	z_type[2] = pic->points[i2].z;
-	//printf("p1: %f, p2: %f\n", pic->points[i1].z, pic->points[i2].z);
 	if (fabs(dx) >= fabs(dy))
 	{
 		if (pic->screen[i2].x >= pic->screen[i1].x)
 			driving_axis_x(pic, pic->screen[i1], pic->screen[i2], z_type);
 		else
-			driving_axis_x(pic, pic->screen[i2], pic->screen[i1], z_type);
+			draw_line(pic, i2, i1);
 	}
 	else
 	{
 		if (pic->screen[i2].y >= pic->screen[i1].y)
 			driving_axis_y(pic, pic->screen[i1], pic->screen[i2], z_type);
 		else
-			driving_axis_y(pic, pic->screen[i2], pic->screen[i1], z_type);
+			draw_line(pic, i2, i1);
 	}
 }

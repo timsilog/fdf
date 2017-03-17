@@ -6,7 +6,7 @@
 #    By: tjose <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/21 14:51:55 by tjose             #+#    #+#              #
-#    Updated: 2017/03/09 17:41:49 by tjose            ###   ########.fr        #
+#    Updated: 2017/03/16 17:31:30 by tjose            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ SRCFILES = main.c \
 		   draw.c \
 		   parse.c \
 		   draw_pic.c \
-		   colors.c
+		   colors.c \
+		   key.c \
+		   start_loop.c
 SRCDIR = ./srcs/
 OBJDIR = ./objs/
 INCDIR = ./includes/
