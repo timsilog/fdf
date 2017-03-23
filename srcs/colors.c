@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 17:14:13 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/16 23:24:49 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/22 20:56:01 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,9 @@ int		get_color(t_pic *pic, float z, int flag)
 
 	r = round(abs(pic->c2.red - pic->c1.red) * z);
 	if (flag)
-		r = pic->c1.red < pic->c2.red ? r + pic->c1.red :
-			pic->c1.red - r;
+		r = pic->c1.red < pic->c2.red ? r + pic->c1.red : pic->c1.red - r;
 	else
-		r = pic->c2.red < pic->c1.red ? r + pic->c2.red :
-			pic->c2.red - r;
+		r = pic->c2.red < pic->c1.red ? r + pic->c2.red : pic->c2.red - r;
 	g = round(abs(pic->c2.green - pic->c1.green) * z);
 	if (flag)
 		g = pic->c1.green < pic->c2.green ? g + pic->c1.green :
@@ -62,10 +60,8 @@ int		get_color(t_pic *pic, float z, int flag)
 			pic->c2.green - g;
 	b = round(abs(pic->c2.blue - pic->c1.blue) * z);
 	if (flag)
-		b = pic->c1.blue < pic->c2.blue ? b + pic->c1.blue :
-			pic->c1.blue - b;
+		b = pic->c1.blue < pic->c2.blue ? b + pic->c1.blue : pic->c1.blue - b;
 	else
-		b = pic->c2.blue < pic->c1.blue ? b + pic->c2.blue :
-			pic->c2.blue - b;
+		b = pic->c2.blue < pic->c1.blue ? b + pic->c2.blue : pic->c2.blue - b;
 	return ((r * 0x10000) + (g * 0x100) + b);
 }

@@ -6,13 +6,13 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/05 17:39:00 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/17 01:34:50 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/22 20:25:55 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		get_2d_coord(t_pic *pic)
+static void	get_2d_coord(t_pic *pic)
 {
 	int i;
 
@@ -24,7 +24,7 @@ void		get_2d_coord(t_pic *pic)
 	}
 }
 
-void		to_worldview(t_pic *pic)
+static void	to_worldview(t_pic *pic)
 {
 	float	world[4][4];
 	int		i;
@@ -40,7 +40,7 @@ void		to_worldview(t_pic *pic)
 		mult_vecmat(&pic->points[i], world, &pic->screen[i]);
 }
 
-void		to_alignedview(t_pic *pic)
+static void	to_alignedview(t_pic *pic)
 {
 	float	aligned[4][4];
 	int		i;
@@ -69,4 +69,10 @@ void		draw_pic(t_pic *pic)
 		if ((i + pic->width) < pic->size)
 			draw_line(pic, i, i + pic->width);
 	}
+}
+
+void		redraw(t_pic *pic)
+{
+	mlx_clear_window(pic->mlx, pic->win);
+	draw_pic(pic);
 }

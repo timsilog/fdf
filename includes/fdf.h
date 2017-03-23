@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 16:11:59 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/16 21:29:58 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/22 20:56:45 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,10 @@ void			rotate_mat(float mat[4][4], float ax, float ay, float az);
 void			copy_mat(float src[4][4], float dest[4][4]);
 void			draw_line(t_pic *pic, int i1, int i2);
 void			parse(t_pic *pic, char **argv, int colors);
-void			to_alignedview(t_pic *pic);
-void			to_worldview(t_pic *pic);
-void			get_2d_coord(t_pic *pic);
 void			draw_pic(t_pic *pic);
 void			hex_to_rgb(t_pic *pic, char *s1, char *s2);
 void			start_loop(t_pic *pic);
+void			redraw(t_pic *pic);
 int				get_color(t_pic *pic, float z, int flag);
 int				key_pressed(int keycode, t_pic *pic);
 

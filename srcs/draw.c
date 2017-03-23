@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 18:35:31 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/17 01:34:40 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/22 20:56:31 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static float	z_bot(t_pic *pic, float z1, float z2)
 		return (pic->z_min + z2);
 }
 
-static void	place_color(t_pic *pic, float xy[2], float z_current, int flag)
+static void		place_color(t_pic *pic, float xy[2], float z_current, int flag)
 {
 	mlx_pixel_put(pic->mlx, pic->win, xy[0], xy[1],
 		get_color(pic, z_current / (pic->z_max - pic->z_min), flag));
 }
 
-static void	driving_axis_x(t_pic *pic, t_3d p1, t_3d p2, float z[3])
+static void		driving_axis_x(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 {
 	float	ij[2];
 	int		neg_y;
@@ -40,7 +40,7 @@ static void	driving_axis_x(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 	e = slope - 1.0;
 	while (ij[0] <= p2.x)
 	{
-		place_color(pic, ij, z[0] ? ((ij[0] - p1.x) / fabs(p2.x - p1.x)) *
+		place_color(pic, ij, z[0] ? (1.0 - (ij[0] - p1.x) / fabs(p2.x - p1.x)) *
 				z[0] + z_bot(pic, z[1], z[2]) : z[1], z[1] < z[2] ? 1 : 0);
 		if (e >= 0.0)
 		{
@@ -52,7 +52,7 @@ static void	driving_axis_x(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 	}
 }
 
-static void	driving_axis_y(t_pic *pic, t_3d p1, t_3d p2, float z[3])
+static void		driving_axis_y(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 {
 	float	ij[2];
 	float	e;
@@ -80,7 +80,7 @@ static void	driving_axis_y(t_pic *pic, t_3d p1, t_3d p2, float z[3])
 	}
 }
 
-void		draw_line(t_pic *pic, int i1, int i2)
+void			draw_line(t_pic *pic, int i1, int i2)
 {
 	float	dx;
 	float	dy;

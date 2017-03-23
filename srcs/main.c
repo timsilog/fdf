@@ -6,13 +6,13 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/20 16:42:42 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/16 22:06:14 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/22 20:54:28 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	mult_vecmat(t_3d *src, float mat[4][4], t_3d *dest)
+void			mult_vecmat(t_3d *src, float mat[4][4], t_3d *dest)
 {
 	float	x;
 	float	y;
@@ -35,7 +35,7 @@ void	mult_vecmat(t_3d *src, float mat[4][4], t_3d *dest)
 	dest->z = z;
 }
 
-t_pic		*init_pic(void)
+static t_pic	*init_pic(void)
 {
 	t_pic *pic;
 
@@ -61,11 +61,11 @@ t_pic		*init_pic(void)
 	return (pic);
 }
 
-int			main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_pic	*pic;
 
-	if (argc < 2 || argc > 4 )
+	if (argc < 2 || argc > 4)
 	{
 		ft_printf("Usage : ./fdf map.fdf [color1 color2]");
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 16:09:50 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/17 01:41:35 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/22 21:05:17 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 **	for rotation:
 **	w = 13, a = 0, s = 1, d = 2
-**	
+**
 **	for moving:
 **	up = 126, left = 123, right = 124, down = 125
 **
@@ -25,12 +25,6 @@
 **	to exit:
 **	esc = 53
 */
-
-static void	redraw(t_pic *pic)
-{
-	mlx_clear_window(pic->mlx, pic->win);
-	draw_pic(pic);
-}
 
 int			key_pressed(int keycode, t_pic *pic)
 {
@@ -45,9 +39,7 @@ int			key_pressed(int keycode, t_pic *pic)
 	if (keycode == 13 || keycode == 1)
 		pic->x_rot = keycode == 13 ? pic->x_rot + .1 : pic->x_rot - .1;
 	if (keycode == 0 || keycode == 2)
-		pic->y_rot = keycode == 0 ? pic->y_rot + .1: pic->y_rot - .1;
+		pic->y_rot = keycode == 0 ? pic->y_rot + .1 : pic->y_rot - .1;
 	redraw(pic);
 	return (0);
 }
-
-
