@@ -6,7 +6,7 @@
 /*   By: tjose <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/20 16:42:42 by tjose             #+#    #+#             */
-/*   Updated: 2017/03/22 20:54:28 by tjose            ###   ########.fr       */
+/*   Updated: 2017/03/23 16:14:26 by tjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int				main(int argc, char **argv)
 	parse(pic, argv, argc == 4 ? 1 : 0);
 	draw_pic(pic);
 	start_loop(pic);
+	free(pic->points);
 	free(pic);
 	return (0);
 }
